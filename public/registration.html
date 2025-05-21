@@ -146,12 +146,13 @@ input[type="date"] {
           <a class="navbar-brand" style="color: white !important; padding-left: 40px;" href="#">
               <img src="media/lifeblood-logo.png" class="logoimg" alt=""> Blood Bank Managment System</a>
           <div class="nabarbtns  ">
-              <ul style="padding-inline: 40px; margin-bottom: 10px;">
+              <ul style="padding-inline: 20px; margin-bottom: 10px;">
                   <li ><a href="index.html" style="text-decoration: none; color:white; font-weight: 500; font-size: 1.2rem;">Home</a></li>
                   <li ><a href="registration.html" style="text-decoration: none; color:white;font-weight: 500; font-size: 1.2rem;">Donate</a></li>
                   <li ><a href="patientregistration.html" style="text-decoration: none; color:white; font-weight: 500; font-size: 1.2rem;">Patient</a></li>
                   <li ><a href="patientregistration.html" style="text-decoration: none; color:white; font-weight: 500; font-size: 1.2rem;">Blood Requests</a></li>
-        
+                  <li ><a href="http://localhost:8080/BloodDonation_Website/public/adminPanel.php" style="text-decoration: none; color:white ; font-weight: 500; font-size: 1.2rem;">Admin Panel</a></li>
+
                   <li>
                     <button style="color: white !important; background-color: rgb(228, 19, 19); font-weight: 600;" type="button" class="signInButton btn btn-outline-danger" ><a href="signIn.html" style="text-decoration: none; color:white; font-weight: 500; font-size: 1.2rem;">Sign In</a></button>
                   </li>
@@ -166,15 +167,24 @@ input[type="date"] {
 
   <main>
     <h2 class="title">Donor Registration</h2>
-    <form class="form-container" action="/pages/api/register.js" method="post">
+    <form class="form-container" action="submit_blood_req.php" method="post">
       <fieldset>
         <legend>Personal Information</legend>
-        <input type="text" placeholder="Full Name *" required />
+        <input type="text" placeholder="Full Name *" name="full_name" required />
         <div class="form-row">
-          <input type="text" placeholder="Age *" required />
-          <input type="text" placeholder="Gender *" list="Gender-types" required />
-          <input list="blood-types" type="text" placeholder="Select Blood Type" name="bloodType" required />
-
+          <input type="text" placeholder="Age *" name="age" required />
+          <input type="text" placeholder="Gender *" name="gender"list="Gender-types" required />
+          <select name="blood_group" required>
+            <option value="">Select Blood Group</option>
+            <option value="A+">A+</option>
+            <option value="B+">B+</option>
+            <option value="O+">O+</option>
+            <option value="AB+">AB+</option>
+            <option value="A-">A-</option>
+            <option value="B-">B-</option>
+            <option value="O-">O-</option>
+            <option value="AB-">AB-</option>
+          </select>
           <datalist id="blood-types">
             <option value="A+">
             <option value="A-">
@@ -184,8 +194,9 @@ input[type="date"] {
             <option value="AB-">
             <option value="O+">
             <option value="O-">
-          </datalist>
-          <datalist id="Gender-types">
+            </datalist>
+           
+            <datalist id="Gender-types">
             <option value="Male">
             <option value="Female">
             <option value="Other">
@@ -197,9 +208,9 @@ input[type="date"] {
 
       <fieldset>
         <legend>Contact Information</legend>
-        <input type="email" placeholder="Email Address *" required />
-        <input type="tel" placeholder="Phone Number *" required />
-        <input type="text" placeholder="Donor Address *" required />
+        <input type="email" placeholder="Email Address *" name="email" required />
+        <input type="tel" placeholder="Phone Number *" name="number" required />
+        <input type="text" placeholder="Donor Address *" name="address" required />
        
       </fieldset>
 
@@ -208,7 +219,7 @@ input[type="date"] {
         <label for="agree">I agree to the terms and conditions</label>
       </div>
 
-      <button type="submit" onclick="Submitted()" class="submit-btn">REGISTER AS DONOR</button>
+      <button type="submit" value="submit request" class="submit-btn">REGISTER AS DONOR</button>
     </form>
   </main>
     
@@ -221,6 +232,12 @@ input[type="date"] {
         alert("Form Submitted");
 
       }
+      function redirectAfterSubmit() {
+    // Optional: You can add form validation or other logic here
+
+    // Redirect to another page (local file or URL)
+    window.location.href = "index.html";
+  }
   </script>
   </body>
 </html>
