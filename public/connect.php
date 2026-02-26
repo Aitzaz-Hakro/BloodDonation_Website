@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$dbname = "mydatabase";
+$dbname = "blood_donation";
 
 $conn = new mysqli($host, $user, $pass, $dbname);
 

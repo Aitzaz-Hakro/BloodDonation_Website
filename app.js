@@ -22,10 +22,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Database connection
 const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'http://b8qdfxar6hvmbqwwykpc-mysql.services.clever-cloud.com',
-  user: process.env.DB_USER || 'udgsco5v0isczcc5',
-  password: process.env.DB_PASSWORD || 'tWY965BCMv8Hdhx2a9vP',
-  database: process.env.DB_NAME || 'b8qdfxar6hvmbqwwykpc'
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || 'blood_donation'
 });
 
 // Connect to database
