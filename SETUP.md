@@ -2,18 +2,29 @@
 
 ## Prerequisites
 - **XAMPP** (includes Apache, MySQL, PHP) - Download from https://www.apachefriends.org/
-- **Node.js** (v18 or higher) - Download from https://nodejs.org/
 
 ---
 
-## Quick Setup (5 Steps)
+## Quick Setup (3 Steps)
 
 ### Step 1: Install & Start XAMPP
 1. Download and install XAMPP
 2. Open **XAMPP Control Panel**
 3. Start **Apache** and **MySQL** services
 
-### Step 2: Create Database
+### Step 2: Clone/Copy Project to XAMPP htdocs
+Copy the project folder to XAMPP's htdocs directory:
+```
+C:\xampp\htdocs\BloodDonation_Website
+```
+
+### Step 3: Setup Database
+**Option A: Automatic Setup (Recommended)**
+1. Open browser and go to: `http://localhost/BloodDonation_Website/public/setup_database.php`
+2. The script will automatically create the database and all tables
+3. Click "Go to Homepage" when done
+
+**Option B: Manual Setup via phpMyAdmin**
 1. Open browser and go to: `http://localhost/phpmyadmin`
 2. Click **"New"** on the left sidebar
 3. Enter database name: `blood_donation`
@@ -22,110 +33,118 @@
 6. Click **"Choose File"** and select: `db/schema.sql` from this project
 7. Click **"Go"** to import the tables
 
-### Step 3: Copy Files to XAMPP
-Copy the entire project folder to XAMPP's htdocs:
-```
-From: D:\Github Repos\BloodDonation_Website
-To:   C:\xampp\htdocs\BloodDonation_Website
-```
+---
 
-Or run this PowerShell command:
-```powershell
-Copy-Item -Path "D:\Github Repos\BloodDonation_Website" -Destination "C:\xampp\htdocs\BloodDonation_Website" -Recurse -Force
-```
+## Access the Website
 
-### Step 4: Install Node.js Dependencies
-```powershell
-cd "D:\Github Repos\BloodDonation_Website"
-npm install
-```
+Main website: `http://localhost/BloodDonation_Website/public/index.php`
 
-### Step 5: Start Servers
-```powershell
-npm start
-```
+### All Pages:
+| Page | URL |
+|------|-----|
+| **Homepage** | `http://localhost/BloodDonation_Website/public/index.php` |
+| **Sign In / Sign Up** | `http://localhost/BloodDonation_Website/public/signIn.php` |
+| **Donor Registration** | `http://localhost/BloodDonation_Website/public/registration.php` |
+| **Blood Requests** | `http://localhost/BloodDonation_Website/public/bloodRequest.php` |
+| **Request Blood** | `http://localhost/BloodDonation_Website/public/request_blood.php` |
+| **Admin Panel** | `http://localhost/BloodDonation_Website/public/adminPanel.php` |
 
 ---
 
-## Access Points
+## Features
 
-| Page | URL |
-|------|-----|
-| Homepage (Node.js) | http://localhost:3000 |
-| Homepage (XAMPP) | http://localhost/BloodDonation_Website/public/index.html |
-| Admin Panel | http://localhost/BloodDonation_Website/public/adminPanel.php |
-| Donor Registration | http://localhost/BloodDonation_Website/public/registration.html |
-| Blood Requests | http://localhost/BloodDonation_Website/public/bloodRequest.html |
+### User Features
+- **Sign Up/Sign In**: Create account and login (stored in MySQL database)
+- **Donor Registration**: Register as a blood donor
+- **Request Blood**: Submit a blood request for a patient
+- **View Blood Requests**: See all blood request records
+
+### Admin Features
+- View all registered donors (click to see details)
+- View all blood requests (click to manage status)
+- Update request status (Pending, Approved, Rejected, Completed)
+- Manage blood inventory (add/remove units)
+- View registered users
+- Delete donors or requests
+- **Blood expiry**: Blood units expire 3 days after being added
+
+---
+
+## Database Configuration
+
+The database connection is configured in `public/config.php`:
+
+```php
+$host = "localhost";
+$user = "root";
+$password = "";
+$dbname = "blood_donation";
+```
+
+Modify these values if your MySQL setup is different.
+
+---
+
+## Project Structure
+
+```
+BloodDonation_Website/
+├── public/                    # All PHP pages
+│   ├── admin/                 # Admin management pages
+│   │   ├── view_donor.php     # View donor details
+│   │   ├── view_request.php   # View/update request status
+│   │   └── inventory.php      # Manage blood inventory
+│   ├── media/                 # Images and assets
+│   ├── config.php             # Database configuration
+│   ├── header.php             # Common header (menu)
+│   ├── index.php              # Homepage
+│   ├── signIn.php             # Sign In / Sign Up
+│   ├── logout.php             # Logout handler
+│   ├── registration.php       # Donor registration
+│   ├── bloodRequest.php       # View blood requests
+│   ├── request_blood.php      # Submit blood request
+│   ├── adminPanel.php         # Admin dashboard
+│   ├── setup_database.php     # Database setup script
+│   └── style.css              # Main stylesheet
+├── db/
+│   └── schema.sql             # Database schema
+└── SETUP.md                   # This file
+```
 
 ---
 
 ## Database Tables
 
-The `schema.sql` creates these tables:
-
 | Table | Purpose |
 |-------|---------|
-| `donor_details` | Stores registered blood donors |
+| `users` | User accounts (sign in/sign up) |
+| `admin_info` | Admin credentials |
+| `donor_details` | Donor registration data |
+| `donors` | Basic donor info |
 | `blood_requests` | Blood request records |
-| `blood_inventory` | Blood stock by type |
-| `admin_info` | Admin credentials (for future use) |
+| `blood_inventory` | Blood stock levels |
 
 ---
 
-## Testing the Registration
+## Default Admin Credentials
 
-1. Go to: `http://localhost/BloodDonation_Website/public/registration.html`
-2. Fill in the donor registration form
-3. Click "Register as Donor"
-4. Check the Admin Panel to see the new donor
+- **Username**: admin
+- **Password**: admin123
 
 ---
 
 ## Troubleshooting
 
 ### "Connection failed" error
-- Make sure MySQL is running in XAMPP Control Panel
-- Verify database `blood_donation` exists in phpMyAdmin
+- Make sure MySQL is running in XAMPP
+- Check that database `blood_donation` exists
+- Run `setup_database.php` to create tables
 
-### PHP files not working
-- Make sure Apache is running in XAMPP Control Panel
-- Files must be in `C:\xampp\htdocs\` folder
+### Pages not loading / 404 error
+- Make sure Apache is running in XAMPP
+- Check the URL path is correct
+- Ensure files are in `C:\xampp\htdocs\BloodDonation_Website\public\`
 
-### Form submission fails
-- Check that all required fields are filled
-- Age must be between 18-65
-
----
-
-## File Structure
-
-```
-BloodDonation_Website/
-├── app.js              # Node.js server
-├── package.json        # Node dependencies
-├── db/
-│   ├── conn.js         # DB connection (Node)
-│   └── schema.sql      # Database schema
-├── public/
-│   ├── index.html      # Homepage
-│   ├── registration.html   # Donor registration
-│   ├── bloodRequest.html   # Blood requests page
-│   ├── adminPanel.php      # Admin dashboard
-│   ├── submit_blood_req.php # Form handler
-│   ├── style.css       # Main styles
-│   └── media/          # Images & assets
-└── routes/
-    └── register.js     # API routes
-```
-
----
-
-## Default Credentials
-
-**User Login** (signIn.html):
-- Email: `aitzazhakro123@gmail.com`
-- Password: `hello123`
-
-**Admin** (for future authentication):
-- Username: `admin`
-- Password: `admin123`
+### Sign In not working
+- Run `setup_database.php` first to create the users table
+- Make sure you've signed up before trying to sign in

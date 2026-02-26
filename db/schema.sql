@@ -5,6 +5,15 @@
 CREATE DATABASE IF NOT EXISTS blood_donation;
 USE blood_donation;
 
+-- Users table (for user authentication - sign in/sign up)
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Admin info table (for admin panel authentication)
 CREATE TABLE IF NOT EXISTS admin_info (
     admin_id INT AUTO_INCREMENT PRIMARY KEY,
